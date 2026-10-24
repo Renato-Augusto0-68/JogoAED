@@ -19,6 +19,8 @@ int main(void)
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 45.0f;                                // Camera field-of-view Y
     camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
+    
+    
     x.ballPos = (Vector3){ 0.0f, 0.0f, 0.0f };
     Vector3 axis = (Vector3){ 12.5f, 12.5f, 12.5f };
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
@@ -27,9 +29,6 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-
-
-
 
         // Update
         //----------------------------------------------------------------------------------
@@ -42,9 +41,8 @@ int main(void)
         BeginMode3D(camera);
             ClearBackground(RAYWHITE);
 
-            DrawText("move the ball with arrow keys", 10, 10, 20, DARKGRAY);
-            
-        
+            DrawText("protótipo", 10, 10, 20, DARKGRAY);
+
             DrawCircle3D(x.ballPos, 2.5f, axis, 45.0f, RED);
         
         
