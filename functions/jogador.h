@@ -11,12 +11,11 @@ gcc main.c functions/movement.c \
     -o game \
     raylib/raylib/src/libraylib.a \
     -lGL -lm -lpthread -ldl -lrt -lX11
-
+    && ./game
 */
 typedef struct jogador {
-
+    int id;
     Vector3 ballPos;
-
 }jogador;
 
 

@@ -3,6 +3,16 @@
 #include "raylib.h"
 #include "jogador.h"
 
-void mover(jogador *x);
+jogador *alocarPecas(int quantidade);
+
+void mover(jogador *jog);
+
+void zerar(jogador *jog);
+
+void escolher(int *unityControl);
+
+void setPosicoes(jogador *jog, int quantidade);
+
+
 
 #endif
