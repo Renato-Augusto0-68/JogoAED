@@ -2,12 +2,13 @@
 #define MOVEMENT_H
 #include "raylib.h"
 #include "jogador.h"
+#include "fases.h"
 
 jogador *alocarPecas(int quantidade);
 
-void mover(jogador *jog);
 
-void zerar(jogador *jog);
+
+void zerar(fases *atual);
 
 void escolher(int *unityControl);
 

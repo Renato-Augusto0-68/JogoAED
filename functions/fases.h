@@ -9,4 +9,7 @@ fases *alocarFases();
 
 void setFases(fases *atual);
 
+nos *alocarNo();
+
+void alocarPosicoes(fases *atual);
 #endif

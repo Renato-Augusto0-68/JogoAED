@@ -18,7 +18,7 @@ int main(void)
     
     Camera3D camera = { 0, };
     fases *atual = alocarFases();
-    
+    int presente =0;
     jogador *x = alocarPecas(3);
     camera.position = (Vector3){ 0.0f, 10.0f, 10.0f };  // Camera position
     camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
@@ -47,8 +47,7 @@ int main(void)
             zerar(&x[unityControl]);
         }
 
-        mudarFase();
-
+       
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
@@ -56,9 +55,11 @@ int main(void)
             ClearBackground(RAYWHITE);
 
             DrawText("protótipo", 10, 10, 20, DARKGRAY);
-            for(int i=0;i<3;i++)
-                DrawCircle3D(x[i].ballPos, 2.5f, axis, 45.0f, RED);
-        
+            while(atual[presente].head!=NULL){
+                nos *aux = atual[presente].head;
+                DrawCircle3D(aux->predefinicoes, 2.5f, axis, 45.0f, RED);
+                atual[presente].head=atual[presente].head->prox;
+            }
         
             EndMode3D();
         EndDrawing();

@@ -4,10 +4,9 @@
 #include "jogador.h"
 
 typedef struct nos{
-    
     int numeroFase;
     Vector3 predefinicoes;
-    
+   
     struct nos *prox;
     struct nos *ant;
 }nos;

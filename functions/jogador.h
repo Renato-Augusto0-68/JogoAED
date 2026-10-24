@@ -15,7 +15,8 @@ gcc main.c functions/movement.c \
 */
 typedef struct jogador {
     int id;
-    Vector3 ballPos;
+    int contPontos;
+    
 }jogador;
 
 
