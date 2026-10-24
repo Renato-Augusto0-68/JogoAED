@@ -8,8 +8,10 @@ LDLIBS := -L$(RAYLIB_DIR) -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 game: main.o $(RAYLIB_LIB)
 	$(CC) $^ -o $@ $(LDLIBS)
 
-main.o: main.c
+main.o: main.c 
 	$(CC) $(CPPFLAGS) -c $< -o $@
+
+
 run: game
 	./game
 

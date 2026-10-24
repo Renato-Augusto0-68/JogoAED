@@ -1,9 +1,10 @@
 #include <raylib.h>
 #include <stdio.h>
 #include "movement.h"
+#include "jogador.h"
 
-    void mover(pecas *x){
-       Vector3 x = x.ballPos;
+    void mover(jogador *jog){
+    Vector3 x = jog->ballPos;
         if (IsKeyDown(KEY_RIGHT)){ 
             x.x += 0.5f; } ;
         if (IsKeyDown(KEY_LEFT))

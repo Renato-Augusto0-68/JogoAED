@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "raylib.h"
+
 #include "functions/jogador.h"
 #include "functions/movement.h"
 
@@ -32,7 +33,7 @@ int main(void)
 
         // Update
         //----------------------------------------------------------------------------------
-        mover(&x.ballPos);
+        mover(&x);
         //----------------------------------------------------------------------------------
 
         // Draw
