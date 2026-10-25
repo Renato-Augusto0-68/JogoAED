@@ -17,16 +17,19 @@ int main(void)
     
     
     Camera3D camera = { 0, };
+    int presente=0;
     fases *atual = alocarFases();
-    int presente =0;
-    jogador *x = alocarPecas(3);
+    setFases(atual);
+    alocarPosicoes(atual);
+
+    jogador *x = alocarPecas();
     camera.position = (Vector3){ 0.0f, 10.0f, 10.0f };  // Camera position
     camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 45.0f;                                // Camera field-of-view Y
     camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
     
-    setPosicoes(x,3);
+   
 
     Vector3 axis = (Vector3){ 12.5f, 12.5f, 12.5f };
     
@@ -40,13 +43,13 @@ int main(void)
         escolher(&unityControl);
         // Update
         //----------------------------------------------------------------------------------
-        mover(&x[unityControl]);
+       // mover(&x[unityControl]);
         //----------------------------------------------------------------------------------
         
-        if(IsKeyDown(KEY_B)){
-            zerar(&x[unityControl]);
+        if(IsKeyPressed(KEY_B)){
+            zerar(&atual[presente], unityControl, x);
         }
-
+        mudarFase(x,&presente);
        
         // Draw
         //----------------------------------------------------------------------------------
@@ -55,10 +58,10 @@ int main(void)
             ClearBackground(RAYWHITE);
 
             DrawText("protótipo", 10, 10, 20, DARKGRAY);
-            while(atual[presente].head!=NULL){
-                nos *aux = atual[presente].head;
+            nos *aux = atual[presente].head;
+            while(aux!=NULL){ 
                 DrawCircle3D(aux->predefinicoes, 2.5f, axis, 45.0f, RED);
-                atual[presente].head=atual[presente].head->prox;
+                aux=aux->prox;
             }
         
             EndMode3D();

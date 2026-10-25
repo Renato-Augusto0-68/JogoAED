@@ -2,14 +2,12 @@
 #define FASES_H
 #include "raylib.h"
 #include "jogador.h"
-#include "fases.c"
-
+#include "fase.h" 
 
 fases *alocarFases();
 
-void setFases(fases *atual);
-
 nos *alocarNo();
-
+void setFases(fases *atual);
 void alocarPosicoes(fases *atual);
+void mudarFase(jogador *jog, int *faseAtual);
 #endif

@@ -4,15 +4,15 @@
 #include "jogador.h"
 #include "fases.h"
 
-jogador *alocarPecas(int quantidade);
+jogador *alocarPecas();
 
 
 
-void zerar(fases *atual);
+void zerar(fases *atual, int unityControl, jogador *jog);
 
 void escolher(int *unityControl);
 
-void setPosicoes(jogador *jog, int quantidade);
+//void setPosicoes(jogador *jog, int quantidade);
 
 
 

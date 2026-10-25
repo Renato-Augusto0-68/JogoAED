@@ -5,7 +5,7 @@
 
 
 /*
-gcc main.c functions/movement.c \
+gcc main.c functions/movement.c functions/fases.c \
     -Iraylib/raylib/src \
     -Lraylib/raylib/src \
     -o game \
@@ -14,9 +14,7 @@ gcc main.c functions/movement.c \
     && ./game
 */
 typedef struct jogador {
-    int id;
     int contPontos;
-    
 }jogador;
 
 
