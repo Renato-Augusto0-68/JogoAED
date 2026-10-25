@@ -6,7 +6,7 @@
 
 jogador *alocarPecas();
 
-
+void Jogar(int* valor);
 
 void zerar(fases *atual, int unityControl, jogador *jog);
 

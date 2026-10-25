@@ -77,12 +77,25 @@ void alocarPosicoes(fases *atual){
             jog[i].ballPos=(Vector3){0.0f,1.0f,2.0f};
     }*/
 }
-
-void mudarFase(jogador *jog, int *faseAtual){
-    if((jog->contPontos%3)==0 &&jog->contPontos!=0){
-        (*faseAtual)++;
+/**/
+int mudarFase(jogador *jog, int *faseAtual){
+    //flag padrão das fases do jogo
+    if((*faseAtual)==2 && ((jog->contPontos)==(3))){
+        jog->contTotal+=(jog->contPontos);
+        (*jog).contPontos=0;
+        return 1;
     }
-    
+    if(((jog->contPontos)==(3))){//&& IsKeyPressed(KEY_A)){
+        (*faseAtual)++;
+        jog->contTotal+=(jog->contPontos);
+        (*jog).contPontos=0;
+        
+    }
+    //condição de ser a fase final
+    return 0;
 }
-
-
+/*
+void mudarFase(jogador *jog, int *faseAtual){
+    if(IsKeyPressed(KEY_A))
+        (*faseAtual)++;
+}*/

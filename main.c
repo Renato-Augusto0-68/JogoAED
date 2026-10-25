@@ -15,7 +15,9 @@ int main(void)
     const int screenHeight = 450;
     InitWindow(screenWidth, screenHeight, "raylib [core] example - input keys");
     
-    
+    int iniciou=-1;
+    int acabou=0; //uma flag pra poder determinar se o jogo comecou ou não... e com ela determinar também a permissão de troca
+    // porque assim isso evita o ocmportamento indevido de mudarFase, pra que ela mude só, mas corretamente...
     Camera3D camera = { 0, };
     int presente=0;
     fases *atual = alocarFases();
@@ -38,19 +40,29 @@ int main(void)
     //--------------------------------------------------------------------------------------
     int unityControl=0;
     // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {
-        escolher(&unityControl);
+    while (!WindowShouldClose()){   
+        if(!acabou)
+            Jogar(&iniciou);
+        if(iniciou==1){
+           
+        
+            escolher(&unityControl);
         // Update
         //----------------------------------------------------------------------------------
        // mover(&x[unityControl]);
         //----------------------------------------------------------------------------------
         
-        if(IsKeyPressed(KEY_B)){
-            zerar(&atual[presente], unityControl, x);
+            if(IsKeyPressed(KEY_B)){
+                zerar(&atual[presente], unityControl, x);
+            }
+        
+            acabou=mudarFase(x,&presente);
+            if(acabou){
+                iniciou=-2;
+            }
         }
-        mudarFase(x,&presente);
-       
+        
+        
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
@@ -58,13 +70,25 @@ int main(void)
             ClearBackground(RAYWHITE);
 
             DrawText("protótipo", 10, 10, 20, DARKGRAY);
-            nos *aux = atual[presente].head;
-            while(aux!=NULL){ 
-                DrawCircle3D(aux->predefinicoes, 2.5f, axis, 45.0f, RED);
-                aux=aux->prox;
+            if(iniciou>-1){
+                nos *aux = atual[presente].head;
+                while(aux!=NULL){ 
+                    DrawCircle3D(aux->predefinicoes, 2.5f, axis, 45.0f, RED);
+                    aux=aux->prox;
+                }
             }
-        
             EndMode3D();
+            if(iniciou>-1){
+                DrawText(TextFormat("valor total: %d",x->contTotal), 10, 10, 10, DARKGRAY);
+            }
+            if(iniciou==-1){
+                DrawText(TextFormat("Pressione enter para começar o jogo"), 100, 10, 10, DARKGRAY);
+ 
+            }
+            if(acabou){
+                DrawText(TextFormat("THIS IS THE END, MY ONLY FRIEND, THE END, ALL THE DREAMS WE HAD, THE END"), 100, 10, 10, DARKGRAY);
+            }
+
         EndDrawing();
         //----------------------------------------------------------------------------------
     }

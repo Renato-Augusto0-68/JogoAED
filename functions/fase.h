@@ -6,7 +6,7 @@
 typedef struct nos{
     int numeroFase;
     Vector3 predefinicoes;
-   
+    int quantidadePistas;
     struct nos *prox;
     struct nos *ant;
 }nos;
