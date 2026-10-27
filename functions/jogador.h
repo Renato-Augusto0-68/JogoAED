@@ -9,6 +9,7 @@ gcc main.c functions/movement.c functions/fases.c     -Iraylib/raylib/src     -L
 */
 typedef struct jogador {
     int contPontos;
+    int quantFases;
     int contTotal;
 }jogador;
 

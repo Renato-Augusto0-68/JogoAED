@@ -7,15 +7,18 @@
 
 
 fases *alocarFases(){
-    fases *aux = malloc(sizeof(fases)*3);
+    fases *aux = malloc(sizeof(fases)*5);
     if(aux!=NULL){
         aux[0].head=NULL;
         aux[1].head=NULL;
         aux[2].head=NULL;
+        aux[3].head=NULL;
+        aux[4].head=NULL;
         aux[0].tail=NULL;
         aux[1].tail=NULL;
         aux[2].tail=NULL;
-        
+        aux[3].tail=NULL;
+        aux[4].tail=NULL;
         return aux;
     }
     return NULL;
@@ -30,15 +33,23 @@ nos *alocarNo(){
     }
     return NULL;
 }
+
 void setFases(fases *atual){
-    for(int i=0;i<3;i++){
+    for(int i=0;i<5;i++){
         nos *aux = atual[i].head;
-        for(int g=0;g<3;g++){
+        
+        for(int g=0;g<5;g++){
             
             nos *novo=alocarNo();
+            
+            
             if(novo==NULL){
                 return;
             }
+            if(i==0)
+                novo->quantidadePistas=3;
+            if(i==1 || i==2|| i==3 || i==4)
+                novo->quantidadePistas=4;
             novo->numeroFase=g;
             novo->prox=NULL;
             if(aux==NULL){
@@ -51,21 +62,23 @@ void setFases(fases *atual){
                 aux=aux->prox;
             }
             atual[i].tail = novo;
+            
         }
     }
 }       
 
 void alocarPosicoes(fases *atual){
-    for(int i=0;i<3;i++){
+    int total = atual->head->quantidadePistas;
+    for(int i=0;i<total;i++){
         nos *aux = atual[i].head;
         int g=0;
         do{
-            if(g==0)
-                aux->predefinicoes = (Vector3){0.4f+i,0.1f,0.2f};
+           if(g==0)
+                aux->predefinicoes = (Vector3){-0.4f+i,0.1f,-0.2f};
             if(g==1)
                 aux->predefinicoes = (Vector3){0.3f, 0.2f, 0.1f+i};
-            if(g==2)
-                aux->predefinicoes = (Vector3){0.44f, 0.13f+i, 0.11f};
+            if(g==2||g==3 || g==4)
+                aux->predefinicoes = (Vector3){0.44f, 0.13f+i, 0.11f};            
             g++;
             aux=aux->prox;
         }while(aux!=NULL);
@@ -78,14 +91,15 @@ void alocarPosicoes(fases *atual){
     }*/
 }
 /**/
-int mudarFase(jogador *jog, int *faseAtual){
+int mudarFase(jogador *jog, int *faseAtual, fases *atual){
     //flag padrão das fases do jogo
-    if((*faseAtual)==2 && ((jog->contPontos)==(3))){
+    nos *aux = atual->head;
+    if((*faseAtual)==((jog->quantFases)-1) && ((jog->contPontos)==(aux->quantidadePistas))){
         jog->contTotal+=(jog->contPontos);
         (*jog).contPontos=0;
         return 1;
     }
-    if(((jog->contPontos)==(3))){//&& IsKeyPressed(KEY_A)){
+    if(((jog->contPontos)==(aux->quantidadePistas))){//&& IsKeyPressed(KEY_A)){
         (*faseAtual)++;
         jog->contTotal+=(jog->contPontos);
         (*jog).contPontos=0;

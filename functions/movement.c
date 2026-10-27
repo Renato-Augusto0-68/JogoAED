@@ -8,6 +8,7 @@
 jogador *alocarPecas(){
     jogador *aux = malloc(sizeof(jogador));
     if(aux!=NULL){
+        aux->quantFases=5;
         aux->contPontos=0;
         aux->contTotal=0;
         return aux;
@@ -21,6 +22,13 @@ void Jogar(int * valor){
 }
 
 void escolher(int *pieceControl){
+    if(IsKeyPressed(KEY_KP_4)){
+        *pieceControl=4;
+    }
+    if(IsKeyPressed(KEY_KP_3)){
+        *pieceControl=3;
+    }
+    
     if(IsKeyPressed(KEY_KP_1)){
         *pieceControl=1;
     }
@@ -34,7 +42,7 @@ void escolher(int *pieceControl){
 
 void zerar(fases *atual, int unityControl, jogador *jog){
     nos *aux = atual->head;
-    for(int i=0;i<3;i++){
+    for(int i=0;i<(aux->quantidadePistas);i++){
         if((aux->numeroFase)==unityControl){
             break;
         }
@@ -42,7 +50,6 @@ void zerar(fases *atual, int unityControl, jogador *jog){
     }
     if(aux!=NULL){
         aux->predefinicoes=(Vector3){10.0f,10.0f,10.0f};
-       
         (jog->contPontos)+=1;
         DrawText(TextFormat("Muda de peca, cara... pegasse a pista! "),
                  10, 190, 15, BLACK);

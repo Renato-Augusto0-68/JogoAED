@@ -9,5 +9,5 @@ fases *alocarFases();
 nos *alocarNo();
 void setFases(fases *atual);
 void alocarPosicoes(fases *atual);
-int mudarFase(jogador *jog, int *faseAtual);
+int mudarFase(jogador *jog, int *faseAtual, fases *atual);
 #endif
