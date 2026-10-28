@@ -37,19 +37,13 @@ nos *alocarNo(){
 void setFases(fases *atual){
     for(int i=0;i<5;i++){
         nos *aux = atual[i].head;
-        
-        for(int g=0;g<5;g++){
-            
+        int tam = (i==0)? 3 : 4;
+        for(int g=0;g<tam;g++){     
             nos *novo=alocarNo();
-            
-            
             if(novo==NULL){
                 return;
             }
-            if(i==0)
-                novo->quantidadePistas=3;
-            if(i==1 || i==2|| i==3 || i==4)
-                novo->quantidadePistas=4;
+            novo->quantidadePistas=tam;
             novo->numeroFase=g;
             novo->prox=NULL;
             if(aux==NULL){

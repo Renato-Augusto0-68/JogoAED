@@ -21,10 +21,11 @@ int main(void)
     Camera3D camera = { 0, };
     int presente=0;
     fases *atual = alocarFases();
-    setFases(&atual[0]);
-    for(int i=0;i<jog->quantFases;i++){
-        alocarPosicoes(&atual[i]);
-    }
+    setFases(atual);
+    
+    alocarPosicoes(
+        atual);
+    
 
    
     camera.position = (Vector3){ 0.0f, 10.0f, 10.0f };  // Camera position

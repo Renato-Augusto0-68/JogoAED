@@ -22,13 +22,14 @@ void Jogar(int * valor){
 }
 
 void escolher(int *pieceControl){
-    if(IsKeyPressed(KEY_KP_4)){
-        *pieceControl=4;
+    if(1){
+        if(IsKeyPressed(KEY_KP_4)){
+            *pieceControl=4;
+        }
+        if(IsKeyPressed(KEY_KP_3)){
+            *pieceControl=3;
+        }
     }
-    if(IsKeyPressed(KEY_KP_3)){
-        *pieceControl=3;
-    }
-    
     if(IsKeyPressed(KEY_KP_1)){
         *pieceControl=1;
     }
@@ -42,6 +43,9 @@ void escolher(int *pieceControl){
 
 void zerar(fases *atual, int unityControl, jogador *jog){
     nos *aux = atual->head;
+    if(aux==NULL){
+        return;
+    }
     for(int i=0;i<(aux->quantidadePistas);i++){
         if((aux->numeroFase)==unityControl){
             break;
