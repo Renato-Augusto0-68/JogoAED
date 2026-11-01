@@ -33,6 +33,7 @@ int main(void)
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 45.0f;                                // Camera field-of-view Y
     camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
+    DisableCursor();
     
    
 
@@ -48,7 +49,7 @@ int main(void)
             Jogar(&iniciou);
         if(iniciou==1){
            
-        
+            UpdateCamera(&camera, CAMERA_FREE); // isso vai ligar o movimento da camera, mas não vai permitir que ela se mova, porque o jogador ainda não começou a jogar
             escolher(&unityControl, jog, &atual[presente]);
         // Update
         //----------------------------------------------------------------------------------
