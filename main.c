@@ -23,8 +23,8 @@ int main(void)
     fases *atual = alocarFases();
     setFases(atual);
     
-    alocarPosicoes(
-        atual);
+   
+    alocarPosicoes(atual);
     
 
    
@@ -49,12 +49,12 @@ int main(void)
         if(iniciou==1){
            
         
-            escolher(&unityControl);
+            escolher(&unityControl, &atual[presente]);
         // Update
         //----------------------------------------------------------------------------------
         //----------------------------------------------------------------------------------
-        
-            if(IsKeyPressed(KEY_B)){
+            jog->mousePosit=GetMousePosition();
+            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                 zerar(&atual[presente], unityControl, jog);
             }
         
@@ -70,7 +70,6 @@ int main(void)
         BeginDrawing();
         BeginMode3D(camera);
             ClearBackground(RAYWHITE);
-
             DrawText("protótipo", 10, 10, 20, DARKGRAY);
             if(iniciou>-1){
                 nos *aux = atual[presente].head;
@@ -82,6 +81,8 @@ int main(void)
             EndMode3D();
             if(iniciou>-1){
                 DrawText(TextFormat("valor total: %d",jog->contTotal), 10, 10, 10, DARKGRAY);
+                DrawText(TextFormat("Posicao do mouse: %f %f", jog->mousePosit.x,jog->mousePosit.y), 10,30,20,BLACK);
+
             }
             if(iniciou==-1){
                 DrawText(TextFormat("Pressione enter para começar o jogo"), 100, 10, 10, DARKGRAY);

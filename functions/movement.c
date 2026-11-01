@@ -11,6 +11,7 @@ jogador *alocarPecas(){
         aux->quantFases=5;
         aux->contPontos=0;
         aux->contTotal=0;
+        aux->mousePosit=(Vector2){0.0f,0.0f};
         return aux;
     }
     return NULL;
@@ -21,15 +22,13 @@ void Jogar(int * valor){
         *valor = 1;
 }
 
-void escolher(int *pieceControl){
-    if(1){
-        if(IsKeyPressed(KEY_KP_4)){
-            *pieceControl=4;
-        }
-        if(IsKeyPressed(KEY_KP_3)){
+void escolher(int *pieceControl, fases* atual){
+    
+        
+    if(IsKeyPressed(KEY_KP_3)){
             *pieceControl=3;
-        }
     }
+    
     if(IsKeyPressed(KEY_KP_1)){
         *pieceControl=1;
     }

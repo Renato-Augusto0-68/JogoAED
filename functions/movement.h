@@ -10,7 +10,7 @@ void Jogar(int* valor);
 
 void zerar(fases *atual, int unityControl, jogador *jog);
 
-void escolher(int *unityControl);
+void escolher(int *unityControl, fases *atual);
 
 //void setPosicoes(jogador *jog, int quantidade);
 

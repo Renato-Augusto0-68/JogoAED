@@ -11,6 +11,7 @@ typedef struct jogador {
     int contPontos;
     int quantFases;
     int contTotal;
+    Vector2 mousePosit;
 }jogador;
 
 
