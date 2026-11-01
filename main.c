@@ -49,7 +49,7 @@ int main(void)
         if(iniciou==1){
            
         
-            escolher(&unityControl, &atual[presente]);
+            escolher(&unityControl, jog, &atual[presente]);
         // Update
         //----------------------------------------------------------------------------------
         //----------------------------------------------------------------------------------

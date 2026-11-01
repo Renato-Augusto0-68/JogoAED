@@ -4,6 +4,16 @@
 #include "movement.h"
 #include "jogador.h"
 #include "fases.h"
+#include "raymath.h"
+
+int distanciaPecaMouse(fases *atual, jogador *jog){
+    
+    nos *aux = atual->head;
+    Vector2 vectorAux = {aux->predefinicoes.x,aux->predefinicoes.y};
+    
+    float distancia = Vector2Distance(vectorAux, jog->mousePosit);
+
+}
 
 jogador *alocarPecas(){
     jogador *aux = malloc(sizeof(jogador));
@@ -22,9 +32,10 @@ void Jogar(int * valor){
         *valor = 1;
 }
 
-void escolher(int *pieceControl, fases* atual){
+void escolher(int *pieceControl, jogador *jog, fases *atual){        
     
-        
+    int result = distanciaPecaMouse(atual,jog);
+    
     if(IsKeyPressed(KEY_KP_3)){
             *pieceControl=3;
     }
