@@ -22,7 +22,6 @@ int main(void)
     int presente=0;
     fases *atual = alocarFases();
     setFases(atual);
-    
    
     alocarPosicoes(atual);
     
@@ -32,8 +31,7 @@ int main(void)
     camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
     camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 75.0f;                                // Camera field-of-view Y
-    camera.projection = CAMERA_PERSPECTIVE;             // Camera mode type
-    DisableCursor();
+    camera.projection = CAMERA_PERSPECTIVE ;            // Camera mode type
     
    
 
@@ -48,14 +46,16 @@ int main(void)
         if(!acabou)
             Jogar(&iniciou);
         if(iniciou==1){
-           
-            UpdateCamera(&camera, CAMERA_FREE); // isso vai ligar o movimento da camera, mas não vai permitir que ela se mova, porque o jogador ainda não começou a jogar
-            escolher(&unityControl, jog, &atual[presente]);
+            atualizarCameraPan(&camera);
+            escolher(&unityControl, jog, &atual[presente], camera);
         // Update
         //----------------------------------------------------------------------------------
         //----------------------------------------------------------------------------------
-            jog->mousePosit=GetMousePosition();
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+            
+            
+            
+            if(IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
+                EnableCursor();
                 zerar(&atual[presente], unityControl, jog);
             }
         
@@ -82,7 +82,7 @@ int main(void)
             EndMode3D();
             if(iniciou>-1){
                 DrawText(TextFormat("valor total: %d",jog->contTotal), 10, 10, 10, DARKGRAY);
-                DrawText(TextFormat("Posicao do mouse: %f %f", jog->mousePosit.x,jog->mousePosit.y), 10,30,20,BLACK);
+                DrawText(TextFormat("Posicao do mouse: %f %f", camera.position.x,camera.position.y), 10,30,20,BLACK);
 
             }
             if(iniciou==-1){

@@ -4,15 +4,15 @@
 #include "jogador.h"
 #include "fases.h"
 
-int distanciaPecaMouse(fases *atual, jogador *jog);
-
 jogador *alocarPecas();
+
+void atualizarCameraPan(Camera3D *camera);
 
 void Jogar(int* valor);
 
 void zerar(fases *atual, int unityControl, jogador *jog);
 
-void escolher(int *unityControl,jogador *jog ,fases *atual);
+void escolher(int *unityControl, jogador *jog, fases *atual, Camera3D camera);
 
 //void setPosicoes(jogador *jog, int quantidade);
 
