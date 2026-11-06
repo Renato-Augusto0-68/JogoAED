@@ -12,8 +12,6 @@ void Jogar(int* valor);
 
 void zerar(fases *atual, Camera3D camera, jogador *jog);
 
-void escolher(int *unityControl, jogador *jog, fases *atual, Camera3D camera);
-
 //void setPosicoes(jogador *jog, int quantidade);
 
 

@@ -52,29 +52,6 @@ void Jogar(int * valor){
         *valor = 1;
 }
 
-void escolher(int *pieceControl, jogador *jog, fases *atual, Camera3D camera){
-    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-        Vector2 auxVector =GetMousePosition();
-        Ray ray = GetMouseRay(auxVector, camera);
-        nos *aux = atual->head;
-        int selecionada = -1;
-        float menorDistancia = 0.0f;
-
-        while(aux != NULL){
-            RayCollision colisao = GetRayCollisionSphere(ray, aux->predefinicoes, 2.5f);
-            if(colisao.hit && (selecionada == -1 || colisao.distance < menorDistancia)){
-                selecionada = aux->numeroFase;
-                menorDistancia = colisao.distance;
-            }
-            aux = aux->prox;
-        }
-
-        if(selecionada != -1){
-            *pieceControl = selecionada;
-        }
-    }
-}
-
 void zerar(fases *atual, Camera3D camera, jogador *jog){
     nos *aux = atual->head;
     if(aux==NULL){
@@ -86,6 +63,10 @@ void zerar(fases *atual, Camera3D camera, jogador *jog){
     float menorDistancia = 0.0f;
 
     while(aux != NULL){
+        if(Vector3Equals(aux->predefinicoes, (Vector3){10.0f, 10.0f, 10.0f})){
+            aux = aux->prox;
+            continue;
+        }
         RayCollision colisao = GetRayCollisionSphere(ray, aux->predefinicoes, 2.5f);
         if(colisao.hit && (selecionada == NULL || colisao.distance < menorDistancia)){
             selecionada = aux;

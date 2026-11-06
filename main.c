@@ -40,22 +40,19 @@ int main(void)
     
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-    int unityControl=0;
     // Main game loop
     while (!WindowShouldClose()){   
         if(!acabou)
             Jogar(&iniciou);
         if(iniciou==1){
             atualizarCameraPan(&camera);
-            escolher(&unityControl, jog, &atual[presente], camera);
         // Update
         //----------------------------------------------------------------------------------
         //----------------------------------------------------------------------------------
             
             
             
-            if(IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
-                EnableCursor();
+            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                 zerar(&atual[presente], camera, jog);
             }
         
