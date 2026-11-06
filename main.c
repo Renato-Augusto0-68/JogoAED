@@ -56,7 +56,7 @@ int main(void)
             
             if(IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)){
                 EnableCursor();
-                zerar(&atual[presente], unityControl, jog);
+                zerar(&atual[presente], camera, jog);
             }
         
             acabou=mudarFase(jog,&presente,&atual[presente]);

@@ -35,15 +35,6 @@ void atualizarCameraPan(Camera3D *camera){
     }
 }
 
-float distanciaPecaMouse(nos *noAtual, jogador *jog){
-    nos *aux = noAtual;
-    Vector2 vectorAux = {aux->predefinicoes.x,aux->predefinicoes.y};
-    float distancia = Vector2Distance(vectorAux, jog->mousePosit);
-    return distancia;
-}
-
-
-
 jogador *alocarPecas(){
     jogador *aux = malloc(sizeof(jogador));
     if(aux!=NULL){
@@ -84,25 +75,29 @@ void escolher(int *pieceControl, jogador *jog, fases *atual, Camera3D camera){
     }
 }
 
-void zerar(fases *atual, int unityControl, jogador *jog){
+void zerar(fases *atual, Camera3D camera, jogador *jog){
     nos *aux = atual->head;
-    
     if(aux==NULL){
         return;
     }
-    for(int i=0;i<(aux->quantidadePistas);i++){
-        if((aux->numeroFase)==unityControl){
-            break;
+
+    Ray ray = GetMouseRay(GetMousePosition(), camera);
+    nos *selecionada = NULL;
+    float menorDistancia = 0.0f;
+
+    while(aux != NULL){
+        RayCollision colisao = GetRayCollisionSphere(ray, aux->predefinicoes, 2.5f);
+        if(colisao.hit && (selecionada == NULL || colisao.distance < menorDistancia)){
+            selecionada = aux;
+            menorDistancia = colisao.distance;
         }
         aux=aux->prox;
     }
-    if(aux!=NULL){
-        aux->predefinicoes=(Vector3){10.0f,10.0f,10.0f};
-        float dist = distanciaPecaMouse(aux,jog);
-        if(dist<=0.5)
-            (jog->contPontos)+=1;
+
+    if(selecionada != NULL){
+        selecionada->predefinicoes=(Vector3){10.0f,10.0f,10.0f};
+        (jog->contPontos)+=1;
         DrawText(TextFormat("Muda de peca, cara... pegasse a pista! "),
                  10, 190, 15, BLACK);
-
     }
 }

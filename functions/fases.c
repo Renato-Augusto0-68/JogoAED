@@ -62,22 +62,14 @@ void setFases(fases *atual){
 }       
 
 void alocarPosicoes(fases *atual){
-    int total = atual->head->quantidadePistas;
     for(int i=0;i<5;i++){
         nos *aux = atual[i].head;
         int g=0;
         if(aux==NULL){return;}
         do{
-           if(g==0)
-                aux->predefinicoes = (Vector3){-0.4f+i,0.1f,-0.2f};
-            if(g==1)
-                aux->predefinicoes = (Vector3){0.3f, 0.2f, 0.1f+i};
-            if(g==2)
-                aux->predefinicoes = (Vector3){0.1f, 0.6f, 0.8f+i};
-            if (g==3)
-                aux->predefinicoes = (Vector3){0.04f, 0.12f+i, 0.01f};  
-            if (g==4)
-                aux->predefinicoes = (Vector3){0.44f, 0.13f+i, 0.11f};            
+            const float x = (g % 2 == 0) ? -3.0f : 3.0f;
+            const float z = (g < 2) ? -3.0f : (g < 4) ? 3.0f : 0.0f;
+            aux->predefinicoes = (Vector3){x, 0.0f, z};
             g++;
             aux=aux->prox;
         }while(aux!=NULL);

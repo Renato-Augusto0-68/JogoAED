@@ -10,7 +10,7 @@ void atualizarCameraPan(Camera3D *camera);
 
 void Jogar(int* valor);
 
-void zerar(fases *atual, int unityControl, jogador *jog);
+void zerar(fases *atual, Camera3D camera, jogador *jog);
 
 void escolher(int *unityControl, jogador *jog, fases *atual, Camera3D camera);
 
