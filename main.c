@@ -6,7 +6,6 @@
 #include "functions/jogador.h"
 #include "functions/movement.h"
 
-
 int main(void)
 {
     // Initialization
@@ -22,10 +21,13 @@ int main(void)
     int presente=0;
     fases *atual = alocarFases();
     setFases(atual);
-   
+    InitAudioDevice();
     alocarPosicoes(atual);
+    //Music musica_tema= LoadMusicStream("arquivo");
+    //float volume = 0.7f;
+    //PlayMusicStream(musica_tema);
+    //SetMusicVolume(musica_tema, volume);
     
-
    
     camera.position = (Vector3){ 0.0f, 10.0f, 10.0f };  // Camera position
     camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
@@ -96,6 +98,8 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
+    //UnloadAudioStream(musica_tema);
+    //CloseAudioDevice();
     CloseWindow();        // Close window and OpenGL contejogt
     //--------------------------------------------------------------------------------------
 
