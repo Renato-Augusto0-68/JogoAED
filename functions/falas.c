@@ -35,25 +35,45 @@ void inserirFalas(falas *falaAtual){
 
 }
 
-void ordenarFalas(falas *falaAtual){
-    falas *aux = falaAtual->prox;
-
-
-
-
-}
-
-falas *meio(falas *falaAtual , falas **a, falas **b){
-    falas *h = falaAtual->prox;
-    falas *end = falaAtual->prox->prox;
-    while(end!=NULL){
+void meio(falas *falaAtual , falas **a, falas **b){
+    falas *h = falaAtual;
+    falas *end = falaAtual->prox;
+    while(end!=NULL && end->prox!=NULL){
         h=h->prox;
-        end=end->prox;
+        end=end->prox->prox;
     }
     *a = falaAtual;
     *b= h->prox;
     h->prox=NULL;
     
+}
+
+falas *ordenarfalas(falas *a, falas *b){
+    falas *resultado = NULL;
+    
+    if (a==NULL) return b;
+    if (b==NULL) return a;
+    
+    if(a->id<=b->id){
+        resultado=a;
+        resultado->prox=ordenarfalas(a->prox, b);
+    }else{
+        resultado=b;
+        resultado->prox=ordenarfalas(a,b->prox);
+    }
+    return resultado;
+}
+
+falas *mergeSort(falas *falaAtual){
+    if (falaAtual == NULL || falaAtual->prox == NULL) {
+        return falaAtual;
+    }
+    falas *a;
+    falas *b;
+    meio(falaAtual,&a,&b);
+    a=mergeSort(a);
+    b=mergeSort(b);
+    return ordenarfalas(a,b); 
 }
 
 void showFalas(falas *falaAtual){

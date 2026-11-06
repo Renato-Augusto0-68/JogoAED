@@ -15,7 +15,9 @@ void inserirFalas(falas *falaAtual);
 
 void meio(falas *falaAtual , falas **a, falas **b);
 
-void ordenarFalas(falas *falaAtual);
+falas *ordenarfalas(falas *a, falas *b);
+
+falas *mergeSort(falas *falaAtual);
 
 void showFalas(falas *falaAtual);
 
