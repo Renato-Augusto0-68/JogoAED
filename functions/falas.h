@@ -13,6 +13,8 @@ falas *alocarFalas();
 
 void inserirFalas(falas *falaAtual);
 
+void meio(falas *falaAtual , falas **a, falas **b);
+
 void ordenarFalas(falas *falaAtual);
 
 void showFalas(falas *falaAtual);

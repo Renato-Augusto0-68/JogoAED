@@ -35,7 +35,26 @@ void inserirFalas(falas *falaAtual){
 
 }
 
-void ordenarFalas(falas *falaAtual){}
+void ordenarFalas(falas *falaAtual){
+    falas *aux = falaAtual->prox;
+
+
+
+
+}
+
+falas *meio(falas *falaAtual , falas **a, falas **b){
+    falas *h = falaAtual->prox;
+    falas *end = falaAtual->prox->prox;
+    while(end!=NULL){
+        h=h->prox;
+        end=end->prox;
+    }
+    *a = falaAtual;
+    *b= h->prox;
+    h->prox=NULL;
+    
+}
 
 void showFalas(falas *falaAtual){
     falas *aux = falaAtual;
