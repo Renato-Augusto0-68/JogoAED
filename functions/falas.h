@@ -9,12 +9,13 @@ typedef struct falas{
     struct falas *prox;
 }falas;
 
-void alocarFalas();
+falas *alocarFalas();
 
 void inserirFalas(falas *falaAtual);
 
 void ordenarFalas(falas *falaAtual);
 
+void showFalas(falas *falaAtual);
 
 
 #endif
