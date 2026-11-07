@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include "functions/fase.h"
 #include "functions/fases.h"
-
+#include "functions/falas.h"
 #include "functions/jogador.h"
 #include "functions/movement.h"
 
@@ -19,6 +19,9 @@ int main(void)
     // porque assim isso evita o ocmportamento indevido de mudarFase, pra que ela mude só, mas corretamente...
     Camera3D camera = { 0, };
     int presente=0;
+    int anterior=0;
+    falas *falasAtual=alocarFalas();
+    inserirFalas(falasAtual);
     fases *atual = alocarFases();
     setFases(atual);
     InitAudioDevice();
@@ -53,7 +56,7 @@ int main(void)
         //----------------------------------------------------------------------------------
             
             
-            
+            anterior=presente;
             if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
                 zerar(&atual[presente], camera, jog);
             }
@@ -72,10 +75,15 @@ int main(void)
             ClearBackground(RAYWHITE);
             DrawText("protótipo", 10, 10, 20, DARKGRAY);
             if(iniciou>-1){
+                mergeSort(falasAtual);
                 nos *aux = atual[presente].head;
                 while(aux!=NULL){ 
                     DrawCircle3D(aux->predefinicoes, 2.5f, axis, 45.0f, RED);
                     aux=aux->prox;
+                }
+                DrawText(TextFormat("valor total: %s",falasAtual->falas), 10, 10, 10, DARKGRAY)
+                if(presente>anterior&& falasAtual!=NULL){
+                    falasAtual=falasAtual->prox;
                 }
             }
             EndMode3D();
