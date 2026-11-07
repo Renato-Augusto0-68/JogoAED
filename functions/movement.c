@@ -42,6 +42,11 @@ jogador *alocarPecas(){
         aux->contPontos=0;
         aux->contTotal=0;
         aux->mousePosit=(Vector2){0.0f,0.0f};
+        aux->pausado=0;
+        aux->contErros=0;
+        aux->anomalia=-1;
+        aux->anomaliaResolvida=0;
+        aux->modoAnomalia=0;
         return aux;
     }
     return NULL;
@@ -52,10 +57,10 @@ void Jogar(int * valor){
         *valor = 1;
 }
 
-void zerar(fases *atual, Camera3D camera, jogador *jog){
+int zerar(fases *atual, Camera3D camera, jogador *jog){
     nos *aux = atual->head;
     if(aux==NULL){
-        return;
+        return -1;
     }
 
     Ray ray = GetMouseRay(GetMousePosition(), camera);
@@ -76,9 +81,42 @@ void zerar(fases *atual, Camera3D camera, jogador *jog){
     }
 
     if(selecionada != NULL){
+        if(selecionada->numeroFase != jog->anomalia){
+            jog->contErros++;
+            return 0;
+        }
+
         selecionada->predefinicoes=(Vector3){10.0f,10.0f,10.0f};
-        (jog->contPontos)+=1;
-        DrawText(TextFormat("Muda de peca, cara... pegasse a pista! "),
-                 10, 190, 15, BLACK);
+        jog->contPontos++;
+        jog->anomaliaResolvida=1;
+        jog->modoAnomalia=0;
+        return 1;
     }
+
+    return -1;
+}
+
+void selecionarAnomalia(fases *atual, jogador *jog) {
+    if (atual == NULL || atual->head == NULL) {
+        return;
+    }
+
+    int quantidade = atual->head->quantidadePistas;
+    int indice = rand() % quantidade;
+
+    nos *aux = atual->head;
+
+    for (int i = 0; i < indice; i++) {
+        aux = aux->prox;
+    }
+
+    jog->anomalia = aux->numeroFase;
+    jog->anomaliaResolvida = 0;
+    jog->modoAnomalia = 1;
+    jog->pausado = 0;
+}
+
+void passarAnomalia(jogador *jog) {
+    jog->anomaliaResolvida = 1;
+    jog->modoAnomalia = 0;
 }

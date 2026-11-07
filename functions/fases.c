@@ -83,20 +83,20 @@ void alocarPosicoes(fases *atual){
 }
 /**/
 int mudarFase(jogador *jog, int *faseAtual, fases *atual){
-    //flag padrão das fases do jogo
     nos *aux = atual->head;
-    if((*faseAtual)==((jog->quantFases)-1) && ((jog->contPontos)==(aux->quantidadePistas))){
-        jog->contTotal+=(jog->contPontos);
-        (*jog).contPontos=0;
+    if(!jog->anomaliaResolvida || aux == NULL){
+        return 0;
+    }
+
+    jog->contTotal += jog->contPontos;
+    jog->contPontos = 0;
+    jog->anomaliaResolvida = 0;
+
+    if((*faseAtual)==((jog->quantFases)-1)){
         return 1;
     }
-    if(((jog->contPontos)==(aux->quantidadePistas))){//&& IsKeyPressed(KEY_A)){
-        (*faseAtual)++;
-        jog->contTotal+=(jog->contPontos);
-        (*jog).contPontos=0;
-        
-    }
-    //condição de ser a fase final
+
+    (*faseAtual)++;
     return 0;
 }
 /*

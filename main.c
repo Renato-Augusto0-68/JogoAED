@@ -5,6 +5,8 @@
 #include "functions/falas.h"
 #include "functions/jogador.h"
 #include "functions/movement.h"
+#include <stdlib.h>
+#include <time.h>
 
 int main(void)
 {
@@ -26,6 +28,8 @@ int main(void)
     setFases(atual);
     InitAudioDevice();
     alocarPosicoes(atual);
+    srand((unsigned int)time(NULL));
+    selecionarAnomalia(&atual[0], jog);
     //Music musica_tema= LoadMusicStream("arquivo");
     //float volume = 0.7f;
     //PlayMusicStream(musica_tema);
@@ -50,20 +54,30 @@ int main(void)
         if(!acabou)
             Jogar(&iniciou);
         if(iniciou==1){
-            atualizarCameraPan(&camera);
-        // Update
-        //----------------------------------------------------------------------------------
-        //----------------------------------------------------------------------------------
-            
-            
-            anterior=presente;
-            if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                zerar(&atual[presente], camera, jog);
+            if(IsKeyPressed(KEY_P)){
+                jog->pausado = !jog->pausado;
             }
-        
-            acabou=mudarFase(jog,&presente,&atual[presente]);
-            if(acabou){
-                iniciou=-2;
+
+            if(!jog->pausado){
+                atualizarCameraPan(&camera);
+
+                if(IsKeyPressed(KEY_SPACE)){
+                    passarAnomalia(jog);
+                }
+
+                if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+                    zerar(&atual[presente], camera, jog);
+                }
+
+                if(jog->contErros >= 3){
+                    acabou=2;
+                }else{
+                    int faseAnterior = presente;
+                    acabou = mudarFase(jog, &presente, &atual[presente]);
+                    if(presente != faseAnterior){
+                        selecionarAnomalia(&atual[presente], jog);
+                    }
+                }
             }
         }
         
@@ -74,30 +88,40 @@ int main(void)
         BeginMode3D(camera);
             ClearBackground(RAYWHITE);
             DrawText("protótipo", 10, 10, 20, DARKGRAY);
-            if(iniciou>-1){
+            if(iniciou>-1 && falasAtual!=NULL){
                 mergeSort(falasAtual);
                 nos *aux = atual[presente].head;
                 while(aux!=NULL){ 
                     DrawCircle3D(aux->predefinicoes, 2.5f, axis, 45.0f, RED);
                     aux=aux->prox;
                 }
-                DrawText(TextFormat("valor total: %s",falasAtual->falas), 10, 10, 10, DARKGRAY)
-                if(presente>anterior&& falasAtual!=NULL){
-                    falasAtual=falasAtual->prox;
-                }
+                DrawText(TextFormat("valor total: %s", falasAtual->falas),
+                         10, 10, 10, DARKGRAY);
             }
             EndMode3D();
             if(iniciou>-1){
-                DrawText(TextFormat("valor total: %d",jog->contTotal), 10, 10, 10, DARKGRAY);
-                DrawText(TextFormat("Posicao do mouse: %f %f", camera.position.x,camera.position.y), 10,30,20,BLACK);
-
+                DrawText(TextFormat("Fase: %d  Pontos: %d  Erros: %d",
+                                    presente + 1, jog->contTotal + jog->contPontos,
+                                    jog->contErros), 10, 10, 20, DARKGRAY);
+                DrawText("P: pausar/retomar | ESPACO: passar anomalia",
+                         10, 35, 16, DARKGRAY);
+                if(jog->pausado){
+                    DrawText("JOGO PAUSADO - pressione P para continuar",
+                             250, 210, 20, BLUE);
+                }
+                if(jog->anomaliaResolvida){
+                    DrawText("Anomalia encontrada!", 10, 65, 20, GREEN);
+                }
             }
             if(iniciou==-1){
                 DrawText(TextFormat("Pressione enter para começar o jogo"), 100, 10, 10, DARKGRAY);
  
             }
-            if(acabou){
+            if(acabou==1){
                 DrawText(TextFormat("THIS IS THE END, MY ONLY FRIEND, THE END, ALL THE DREAMS WE HAD, THE END"), 100, 10, 10, DARKGRAY);
+            }
+            if(acabou==2 || jog->contErros>=3){
+                DrawText("VOCE PERDEU: tres erros.", 250, 210, 24, RED);
             }
 
         EndDrawing();

@@ -12,7 +12,13 @@ typedef struct jogador {
     int quantFases;
     int contTotal;
     Vector2 mousePosit;
-}jogador;
+
+    int pausado;
+    int contErros;
+    int anomalia;
+    int anomaliaResolvida;
+    int modoAnomalia;
+} jogador;
 
 
 #endif

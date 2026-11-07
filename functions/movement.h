@@ -10,7 +10,11 @@ void atualizarCameraPan(Camera3D *camera);
 
 void Jogar(int* valor);
 
-void zerar(fases *atual, Camera3D camera, jogador *jog);
+int zerar(fases *atual, Camera3D camera, jogador *jog);
+
+void selecionarAnomalia(fases *atual, jogador *jog);
+
+void passarAnomalia(jogador *jog);
 
 //void setPosicoes(jogador *jog, int quantidade);
 
