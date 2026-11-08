@@ -67,7 +67,7 @@ void alocarPosicoes(fases *atual){
         int g=0;
         if(aux==NULL){return;}
         do{
-            const float x = (g % 2 == 0) ? -3.0f : 3.0f;
+            const float x = (g % 2 == 0) ? (i*(-3.0f)) : (i-(3.0f));
             const float z = (g < 2) ? -3.0f : (g < 4) ? 3.0f : 0.0f;
             aux->predefinicoes = (Vector3){x, 0.0f, z};
             g++;

@@ -69,6 +69,10 @@ int main(void)
                     zerar(&atual[presente], camera, jog);
                 }
 
+                if(jog->contPontos==3 && jog->contErros<3){
+                    iniciou=-2;
+                }
+
                 if(jog->contErros >= 3){
                     acabou=2;
                 }else{
@@ -97,6 +101,9 @@ int main(void)
                 }
                 DrawText(TextFormat("valor total: %s", falasAtual->falas),
                          10, 10, 10, DARKGRAY);
+                if(presente>anterior&& falasAtual!=NULL){
+                    falasAtual=falasAtual->prox;
+                }
             }
             EndMode3D();
             if(iniciou>-1){
@@ -117,11 +124,11 @@ int main(void)
                 DrawText(TextFormat("Pressione enter para começar o jogo"), 100, 10, 10, DARKGRAY);
  
             }
-            if(acabou==1){
+            if(iniciou==-2){
                 DrawText(TextFormat("THIS IS THE END, MY ONLY FRIEND, THE END, ALL THE DREAMS WE HAD, THE END"), 100, 10, 10, DARKGRAY);
             }
             if(acabou==2 || jog->contErros>=3){
-                DrawText("VOCE PERDEU: tres erros.", 250, 210, 24, RED);
+                DrawText("VOCE PERDEU: tres erros.", 250, 110, 24, RED);
             }
 
         EndDrawing();
