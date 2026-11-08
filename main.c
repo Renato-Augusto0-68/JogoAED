@@ -143,9 +143,8 @@ int main(void)
                 if(iniciou!=-1 && auxF!=NULL){
                     DrawText(TextFormat("%s", auxF->falas),
                          10, 10, 10, DARKGRAY);
-                
-                    if(IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
-                         auxF=auxF->prox;
+                    DrawText(TextFormat("Pressione C para andar o dialogo"),
+                         10, 60, 10, DARKGRAY);
                 }
             }
             if(iniciou==-1){
