@@ -17,6 +17,7 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [core] example - input keys");
     jogador *jog = alocarPecas();
     int iniciou=-1;
+    int modoImagens=1;
     int acabou=0; //uma flag pra poder determinar se o jogo comecou ou não... e com ela determinar também a permissão de troca
     // porque assim isso evita o ocmportamento indevido de mudarFase, pra que ela mude só, mas corretamente...
     Camera3D camera = { 0, };
@@ -24,6 +25,9 @@ int main(void)
     int anterior=0;
     falas *falasAtual=alocarFalas();
     inserirFalas(falasAtual);
+    falasAtual = mergeSort(falasAtual);
+    falas *auxF = falasAtual;
+
     fases *atual = alocarFases();
     setFases(atual);
     InitAudioDevice();
@@ -46,14 +50,24 @@ int main(void)
 
     Vector3 axis = (Vector3){ 12.5f, 12.5f, 12.5f };
     
-    
+    // preparar o cenário em que nao aparece pista... ai eu uso o falas.c...
+    // no caso, via iniciou e acabou...
+    // mas o jogo já iniciou assim, só não o modo de busca... nesse caso ai eu precisarei de acabou, 
+    //rpa ativar o cenário, e de forma a ficar dentro de iniciou pq o njogo 
+    //já está rodando, sõ nao nesse modo
+
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
     // Main game loop
     while (!WindowShouldClose()){   
         if(!acabou)
             Jogar(&iniciou);
-        if(iniciou==1){
+        if(iniciou==1){       
+            if(modoImagens==1){
+                if(IsKeyPressed(KEY_C)/*falasAtual!=NULL*/)
+                    modoImagens=0;
+            }
+            if(modoImagens==0){
             if(IsKeyPressed(KEY_P)){
                 jog->pausado = !jog->pausado;
             }
@@ -63,10 +77,12 @@ int main(void)
 
                 if(IsKeyPressed(KEY_SPACE)){
                     passarAnomalia(jog);
+                    modoImagens=1;
                 }
 
                 if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-                    zerar(&atual[presente], camera, jog);
+                    if((zerar(&atual[presente], camera, jog))==1)
+                        modoImagens=1;
                 }
 
                 if(jog->contPontos==3 && jog->contErros<3){
@@ -80,32 +96,29 @@ int main(void)
                     acabou = mudarFase(jog, &presente, &atual[presente]);
                     if(presente != faseAnterior){
                         selecionarAnomalia(&atual[presente], jog);
+                        if(auxF!=NULL){auxF=auxF->prox;}
+                        modoImagens=1;
                     }
                 }
             }
         }
-        
-        
+        }
+    
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
         BeginMode3D(camera);
             ClearBackground(RAYWHITE);
             DrawText("protótipo", 10, 10, 20, DARKGRAY);
-            if(iniciou>-1 && falasAtual!=NULL){
-                mergeSort(falasAtual);
+            if(iniciou>-1 && modoImagens==0 && falasAtual!=NULL){
                 nos *aux = atual[presente].head;
                 while(aux!=NULL){ 
                     DrawCircle3D(aux->predefinicoes, 2.5f, axis, 45.0f, RED);
                     aux=aux->prox;
                 }
-                DrawText(TextFormat("valor total: %s", falasAtual->falas),
-                         10, 10, 10, DARKGRAY);
-                if(presente>anterior&& falasAtual!=NULL){
-                    falasAtual=falasAtual->prox;
-                }
             }
             EndMode3D();
+            if(modoImagens==0){
             if(iniciou>-1){
                 DrawText(TextFormat("Fase: %d  Pontos: %d  Erros: %d",
                                     presente + 1, jog->contTotal + jog->contPontos,
@@ -119,6 +132,21 @@ int main(void)
                 if(jog->anomaliaResolvida){
                     DrawText("Anomalia encontrada!", 10, 65, 20, GREEN);
                 }
+                if(acabou==2 || jog->contErros>=3){
+                    DrawText("VOCE PERDEU: tres erros. Encerre o jogo!", 250, 110, 24, RED);
+                }
+            }
+           
+            }
+            if(modoImagens==1){
+
+                if(iniciou!=-1 && auxF!=NULL){
+                    DrawText(TextFormat("%s", auxF->falas),
+                         10, 10, 10, DARKGRAY);
+                
+                    if(IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+                         auxF=auxF->prox;
+                }
             }
             if(iniciou==-1){
                 DrawText(TextFormat("Pressione enter para começar o jogo"), 100, 10, 10, DARKGRAY);
@@ -127,9 +155,8 @@ int main(void)
             if(iniciou==-2){
                 DrawText(TextFormat("THIS IS THE END, MY ONLY FRIEND, THE END, ALL THE DREAMS WE HAD, THE END"), 100, 10, 10, DARKGRAY);
             }
-            if(acabou==2 || jog->contErros>=3){
-                DrawText("VOCE PERDEU: tres erros.", 250, 110, 24, RED);
-            }
+            
+
 
         EndDrawing();
         //----------------------------------------------------------------------------------

@@ -10,6 +10,7 @@
 falas *alocarFalas(){
     falas *aux = (falas*) malloc(sizeof(falas));
     if(aux!=NULL){
+        aux->prox=NULL;
         return aux;
     }
     return NULL;
